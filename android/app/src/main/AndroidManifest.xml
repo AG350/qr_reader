@@ -3,6 +3,8 @@
    <application
         android:label="qr_reader"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyBa33FsFzKYRymQjO9OkGOYe8E8d0ROIOQ"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -38,4 +40,11 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <queries>
+    <intent>
+      <action android:name="android.intent.action.VIEW"></action>
+      <category android:name="android.intent.category.BROWSABLE"></category>
+      <data android:scheme="https"></data>
+    </intent>
+  </queries>
 </manifest>

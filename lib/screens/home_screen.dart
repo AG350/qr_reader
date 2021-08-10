@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_reader/providers/ui_provider.dart';
+import 'package:qr_reader/providers/providers.dart';
 import 'package:qr_reader/screens/screens.dart';
 import 'package:qr_reader/widgets/widgets.dart';
 
@@ -12,7 +12,12 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         title: Text('Historial'),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.delete_forever))
+          IconButton(
+            onPressed: () {
+              Provider.of<ScanProvider>(context, listen: false).clearAll();
+            },
+            icon: Icon(Icons.delete_forever),
+          )
         ],
       ),
       body: _HomePageBody(),
@@ -28,11 +33,24 @@ class _HomePageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final uiProvider = Provider.of<UiProvider>(context);
     final currentIndex = uiProvider.selectedMenuOpt;
+    final scanProvider = Provider.of<ScanProvider>(context);
+
+    //final tempScan = new ScanModel(value: 'https://google.com.ar');
+    //DBProvider.db.initDB();
+    //DBProvider.db.newScan(tempScan);
+    //DBProvider.db.getAllScans().then(print);
+    //DBProvider.db.getScanById(8).then((value) => print(value?.value));
+    //final ScanModel newScan = new ScanModel(id: 1, type: 'geo', value: 'geo- 31.313,321.3');
+    //DBProvider.db.updateScan(newScan).then((value) => print(value));
+    //DBProvider.db.deleteAllScan().then((print));
+
     switch (currentIndex) {
       case 0:
-        return MapsScreen();
+        scanProvider.loadScansByType('geo');
+        return ScanTiles();
       case 1:
-        return DirectionsScreen();
+        scanProvider.loadScansByType('http');
+        return ScanTiles();
       default:
         return MapsScreen();
     }
